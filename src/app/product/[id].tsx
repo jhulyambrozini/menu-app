@@ -4,7 +4,7 @@ import { useCartSore } from '@/stores/cart-store';
 import { formatCurrency } from '@/utils/data/functions/format-currency';
 import { PRODUCTS } from '@/utils/data/products';
 import { Feather } from '@expo/vector-icons';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { Redirect, useLocalSearchParams, useNavigation } from 'expo-router';
 import { Image, View, Text } from 'react-native';
 
 export default function Product() {
@@ -12,12 +12,19 @@ export default function Product() {
   const cartStore = useCartSore();
   const navigatio = useNavigation();
 
-  const product = PRODUCTS.filter(item => item.id === id)[0];
+  const product = PRODUCTS.find(item => item.id === id);
 
   function handleAddToCart() {
-    cartStore.add(product);
-    navigatio.goBack();
+    if (product) {
+      cartStore.add(product);
+      navigatio.goBack();
+    }
   }
+
+  if (!product) {
+    return <Redirect href={'/'} />;
+  }
+
   return (
     <View className="flex-1">
       <Image
@@ -27,6 +34,7 @@ export default function Product() {
       />
 
       <View className="p-5 mt-8 flex-1">
+        <Text className="text-white text-xl font-heading">{product.title}</Text>
         <Text className="text-lime-400 text-2xl font-heading my-2">
           {formatCurrency(product.price)}
         </Text>
