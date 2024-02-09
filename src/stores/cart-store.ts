@@ -12,6 +12,7 @@ type StateProps = {
   products: ProductCartProps[];
   add: (product: ProductProps) => void;
   remove: (productId: string) => void;
+  clear: () => void;
 };
 
 export const useCartSore = create(
@@ -29,7 +30,10 @@ export const useCartSore = create(
           products: cartInMemory.remove(state.products, productId),
         }));
       },
+
+      clear: () => set(() => ({ products: [] })),
     }),
+
     {
       name: 'menu-app:cart',
       storage: createJSONStorage(() => AsyncStorage),
