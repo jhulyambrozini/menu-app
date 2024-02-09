@@ -1,15 +1,23 @@
 import { Button } from '@/components/button';
 import { LinkButton } from '@/components/link-button';
+import { useCartSore } from '@/stores/cart-store';
 import { formatCurrency } from '@/utils/data/functions/format-currency';
 import { PRODUCTS } from '@/utils/data/products';
 import { Feather } from '@expo/vector-icons';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { Image, View, Text } from 'react-native';
 
 export default function Product() {
   const { id } = useLocalSearchParams();
+  const cartStore = useCartSore();
+  const navigatio = useNavigation();
 
   const product = PRODUCTS.filter(item => item.id === id)[0];
+
+  function handleAddToCart() {
+    cartStore.add(product);
+    navigatio.goBack();
+  }
   return (
     <View className="flex-1">
       <Image
@@ -38,7 +46,7 @@ export default function Product() {
       </View>
 
       <View className="p-5 pb-8 gap-5">
-        <Button>
+        <Button onPress={handleAddToCart}>
           <Button.Icon>
             <Feather name="plus-circle" size={20} />
           </Button.Icon>
