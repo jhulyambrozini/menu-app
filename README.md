@@ -1,5 +1,5 @@
 # Menu APP
-Este prjeto foi feito durante a NLW Expert da Rocketseat na trilha com foco em front end mobile com React Native.
+Este projeto foi feito durante a NLW Expert da Rocketseat na trilha com foco em front end mobile com React Native.
 
 Ele consiste em aplicativo de cardápio para restaurantes/lanchonetes, que possui telas de:
 - Lista de produtos
